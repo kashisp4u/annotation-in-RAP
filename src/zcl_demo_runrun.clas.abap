@@ -16,29 +16,6 @@ CLASS zcl_demo_runrun IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
 
 TRY.
-*  CALL METHOD cl_numberrange_runtime=>number_get
-*       EXPORTING
-*         nr_range_nr = '01'
-*         object      = 'ZSAM_RNUM'
-*       IMPORTING
-*         number      = DATA(lv_number)
-*         returncode  = DATA(lv_rcode).
-CALL METHOD cl_numberrange_runtime=>number_check
-  EXPORTING
-    nr_range_nr   = '01'
-*    number        =
-*    numeric_check =
-    object        = 'ZSAM_RNUM'
-*    subobject     =
-*    toyear        =
-*    number_alpha  =
-*    length_check  =
-  IMPORTING
-    returncode    = data(returncode)
-  .
-*CATCH cx_nr_object_not_found.
-*CATCH cx_number_ranges.
-
 
 CALL METHOD cl_numberrange_runtime=>number_get
   EXPORTING
