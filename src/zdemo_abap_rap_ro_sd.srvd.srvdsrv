@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition of root entity'
+define service ZDEMO_ABAP_RAP_RO_SD {
+  expose ZDEMO_ABAP_RAP_RO_M;
+}

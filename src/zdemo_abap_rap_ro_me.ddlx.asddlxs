@@ -1,0 +1,179 @@
+@Metadata.layer: #CORE
+@UI:{ headerInfo: {
+          typeName: 'Root entity',
+          typeNamePlural: 'Root entitys',
+          title: {
+              type: #STANDARD,
+              value: 'field1'
+          },
+          description: {
+              type: #STANDARD,
+              value: 'key_field'
+          }},
+          presentationVariant: [{  
+                    sortOrder: [{  
+                           by: 'field1' ,
+                           direction:  #DESC }] ,
+               visualizations: [{ type: #AS_CHART }] }]
+                                    }
+//@UI.chart: [{    qualifier: 'radialchart' ,
+//                 title: 'RadialChart',
+//                 description: 'This is micro chart',
+//                 chartType:#DONUT,
+//                 measures: [ 'field3' ],
+//measureAttributes: [{ role: #AXIS_1, measure: 'field3' , asDataPoint: true }]}]
+
+@UI.chart: [{ 
+              chartType:         #BULLET ,
+              measures:          ['field3'],
+              measureAttributes: [{ 
+                    measure:     'field3' , 
+                    role:        #AXIS_1 , 
+                    asDataPoint: true 
+                    }]
+              }]
+
+annotate entity ZDEMO_ABAP_RAP_RO_M with
+{
+
+  @UI.facet: [{
+      id: 'Header',
+      purpose: #STANDARD,
+      position: 10,
+      isPartOfPreview: true,
+      isSummary: true,
+      isMap: true,
+      importance: #HIGH ,
+      label: 'Details',
+      type: #COLLECTION
+  },
+  {
+  id: 'item',
+  parentId: 'Header',
+      purpose: #STANDARD,
+      position: 10,
+      label: 'header elements Details',
+      type: #IDENTIFICATION_REFERENCE   },
+      {
+      id : 'interger',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Intergers block',
+      position: 30,
+      targetQualifier: 'intgrp',
+     parentId: 'Header'
+      } ,
+     {
+      id : 'Charactor',
+      purpose: #STANDARD,
+      type: #FIELDGROUP_REFERENCE,
+      label: 'Charactor Block',
+      position:40,
+      targetQualifier: 'chargrp',
+      parentId: 'Header'
+      },
+      {
+       id : 'firstint',
+       purpose: #HEADER,
+      type: #DATAPOINT_REFERENCE,
+      position: 20,
+      targetQualifier: 'totalint'
+       }
+       ,
+       {
+       id : 'lastint',
+       purpose: #HEADER,
+       type: #DATAPOINT_REFERENCE,
+       targetQualifier: 'lint',
+       position: 30
+       }
+       ,
+        {
+                purpose:         #HEADER,
+                type:            #CHART_REFERENCE,
+                label: 'Chart list'    
+//                targetQualifier: 'radialchart'
+               }
+              
+  ]
+
+  @UI.lineItem: [{ position: 10 }]
+  @UI.selectionField: [{ position: 10  }]
+  @EndUserText.label: 'Interger 4 key'
+
+  @UI.identification: [{ position: 20 }]
+  key_field;
+
+  @UI.lineItem: [{ position: 20 }]
+  @EndUserText.label: 'Character 10'
+  @UI.identification: [{ position: 10 }]
+  @Consumption.valueHelpDefinition: [{ entity: {
+                                         name: 'ZDEMO_ABAP_RAP_CH_U',
+                                         element: 'field_ch1'
+                                     } }]
+  @UI.fieldGroup: [{
+      qualifier: 'chargrp',
+      position: 10
+      }]
+  field1;
+
+  @UI.lineItem: [{ position: 30 }]
+  @EndUserText.label: 'Character 10'
+  //  @UI.identification: [{ position: 30 }]
+  @UI.fieldGroup: [{
+      qualifier: 'chargrp',
+      position: 20
+      }]
+  @UI.dataPoint: { qualifier: 'totalint', title: '2 Character' }
+  field2;
+
+  @UI.lineItem: [{ position: 40 , type: #AS_CHART   ,label: 'Raidal Indicator'  }] 
+  //  @EndUserText.label: 'Interger 4' ", valueQualifier: 'radialchart' 
+//    @UI.identification: [{ position: 40 }]
+  @UI.fieldGroup: [{ qualifier: 'intgrp', position: 10 }]
+
+  @UI.dataPoint : { qualifier: 'field3'  ,
+   targetValueElement: 'field4',
+ maximumValue: 200 , minimumValue: 0 ,
+  criticalityCalculation: { 
+                        improvementDirection:  #MAXIMIZE ,
+                        deviationRangeLowValueElement: 'colort' ,
+                        toleranceRangeLowValueElement: 'field4'
+                      } }
+  field3;
+
+  @UI.lineItem: [{ position: 50 , criticality: 'colort' }]
+  @UI.selectionField: [{ position: 50  }]
+  @EndUserText.label: 'Interger 4'
+  //  @UI.identification: [{ position: 50 }]
+  @UI.fieldGroup: [{
+    qualifier: 'intgrp',
+    position: 20
+    }]
+  @UI.dataPoint : { qualifier: 'lint', title: 'last integer' }
+  field4;
+  
+  
+ 
+@UI.lineItem: [{ position: 60 , type: #AS_DATAPOINT , importance: #HIGH  }]  
+@EndUserText.label: 'Rating'
+@UI.dataPoint : {  
+//qualifier: 'rating',
+visualization:  #RATING
+ }
+//@UI.identification: [{ position: 60 , type: #AS_DATAPOINT , importance: #HIGH }]
+ @UI.fieldGroup: [{ qualifier: 'intgrp', position: 30 , type: #AS_DATAPOINT  , importance: #HIGH }]
+colort ;
+
+@UI.lineItem: [{ position: 70 , importance: #HIGH ,cssDefault.width: '15rem'  }] 
+@UI.identification: [{ position: 70 , importance: #HIGH  }]
+P_Image_URL ;
+
+//  /* Associations */
+//  @UI.selectionField: [{ position: 60 , element: '_child.field_ch1' }]
+//  @UI.lineItem: [{ position: 60 }]
+//  @EndUserText.label: 'Child'
+//  _child;
+
+
+}
